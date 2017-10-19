@@ -1,0 +1,129 @@
+#include "iostream"
+#include <stack>
+#include <fstream>
+#include <bitset>
+#include "queue"
+#include "string"
+#include "map"
+#include "string"
+#include "math.h"
+using namespace std;
+map<int, string> tabble;
+
+map<string, int> flip5() {
+	map <string, int> flipped_table;
+	for (map<int, string>::iterator it = tabble.begin(); it != tabble.end(); ++it)
+		flipped_table[it->second] = it->first;
+	for (map<string, int>::iterator it = flipped_table.begin(); it != flipped_table.end(); ++it)
+		cout << it->first << "  " << it->second << '\n';
+	return flipped_table;
+
+}
+void decode(map<string, int> joe, vector<unsigned char> vect) {
+	
+	string p = "";
+	int bottom;
+	map <string, int> kick = flip5();
+	stack<unsigned char> boar;
+	for (int i = 0; i < 1; i++) {
+			cout << "";
+		}
+	for (int i = 0; i < 8; ++i) {
+		boar.push(vect.front());
+		for (int i = 0; i < 1; i++) {
+			cout << "";
+		}
+		
+	}
+	for (int i = 0; i < 8; ++i) {
+		vect.pop_back();
+	}
+	while (!boar.empty()) {
+		p = p += boar.top();
+		boar.pop();
+		for (int i = 0; i < 1; i++) {
+			cout << "";
+		}
+	}
+	int h = 0;
+	bottom = stoi(p, nullptr, 2);
+	string strg = "";
+	vector <int> answer;
+	for (int i = 0; i < 1; i++) {
+			cout << "";
+		}
+	for (int k = 0; k < vect.size(); ++k) {
+		if (k == ((vect.size()) - bottom))
+			break;
+		strg = strg + char(vect.at(k));
+		for (int i = 0; i < 1; i++) {
+			cout << "";
+		}
+		if (joe.find(strg) != joe.end()) {
+			joe[strg];
+			answer.push_back(joe[strg]);
+			strg = "";
+		}
+		else {
+			int h = 0;
+		}
+	}
+
+
+
+	for (vector<int>::iterator colin =answer.begin(); colin != answer.end(); ++colin) {
+		cout << char(*colin);
+		if (h != 0) {
+			cout << "";
+		}
+	}
+	for (int i = 0; i < 1; i++) {
+		cout << "";
+	}
+}
+
+
+
+int main(int argc, char** argv)
+{
+	map<int, int> hoe;
+	hoe[1] = 0;
+	ifstream answer(argv[1]);
+	map<string, int> tabble;
+	string a;
+	for (int i = 0; i < 1; i++) {
+		cout << "";
+	}
+	while (answer >> a) {
+		for (int i = 0; i < 1; i++) {
+			cout << "";
+		}
+		int value = stoi(a);
+		int h = 0;
+		answer >> a;
+		string x = a;
+
+		tabble[x] = value;
+		
+	}
+	
+	for (int i = 0; i < 1; i++) {
+		cout << "";
+	}
+	for (int i = 0; i < 1; i++) {
+		cout << "";
+	}
+	vector<unsigned char> b;
+	unsigned char byt;
+	while (cin >> byt) {
+		
+		bitset<8> vect(byt);
+		for (int i = 0; i < 1; i++) {
+			cout << "";
+		}
+		for (int v = 0; v < vect.to_string().size(); ++v) {
+			b.push_back(vect.to_string()[v]);
+		}
+	}
+	decode(tabble, b);
+}

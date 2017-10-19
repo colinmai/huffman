@@ -1,0 +1,269 @@
+#include "iostream"
+#include "queue"
+#include "string"
+#include "map"
+#include "string"
+#include <fstream>
+using namespace std;
+map<int, string> huffmantable;
+
+
+
+struct heaper
+{
+	char data;
+	unsigned freq;
+	heaper *left, *right;
+
+	heaper(char data, int freq)
+	{
+		left = right = NULL;
+		this->freq = freq;
+		this->data = data;
+	}
+};
+
+class mintree
+{
+	int ascii;
+	int freq;
+	mintree* leftchild;
+	mintree* rightchild;
+	mintree* parent;
+};
+
+
+
+
+
+void printCodes(struct heaper* x, string str)
+{
+	//	map<int, string> huffmantable;
+	if (!x)
+		return;
+
+	if (x->data != '$') {
+		huffmantable[x->data] = str;
+		//cout << root->data << ": ";
+		//cout << str << "\n";
+	}
+	for (int a = 0; a < 1; a++)
+	{
+		int k = 0;
+	}
+	printCodes(x->left, str + "0");
+	printCodes(x->right, str + "1");
+	huffmantable;
+}
+
+struct compare
+{
+	int d = 0;
+	bool operator()(heaper* a, heaper* b)
+	{
+		return (a->freq > b->freq);
+		d++;
+	}
+	//cout << root->data << ": ";
+	//cout << str << "\n";
+};
+
+
+void HuffmanCodes(vector< pair<char, int> > &freq, int size)
+{
+	struct heaper*left, *right, *top;
+
+
+	priority_queue<heaper*, vector<heaper*>, compare> heap;
+	for (vector< pair<char, int> >::iterator i = freq.begin(); i != freq.end(); ++i) {
+		heap.push(new heaper(i->first, i->second));
+	}
+
+	while (heap.size() != 1)
+	{
+
+		left = heap.top();
+		heap.pop();
+
+		right = heap.top();
+		heap.pop();
+		//cout << root->data << ": ";
+		//cout << str << "\n";
+		int h = 7;
+
+
+		top = new heaper('$', left->freq + right->freq);
+		top->left = left;
+		top->right = right;
+		heap.push(top);
+		//cout << root->data << ": ";
+		//cout << str << "\n";
+	}
+
+
+	printCodes(heap.top(), "");
+}
+
+
+vector <unsigned char> encode(std::map<int, string> huffmantable2) {
+	char q;
+	int counter = 0;
+	char s;
+	vector <unsigned char> encode_output;
+	encode_output.push_back(0);
+	while (cin >> s) {
+		if (&huffmantable2[s] != NULL)
+		{
+			for (int i = 0; i < huffmantable2[s].length(); ++i) {
+				//cout << (unsigned char)(huffmantable2[s][i] - '0') << endl;
+				//cout << (huffmantable2[s][i] - 0x30);
+				//std::cout << huffmantable[s][i] << std::endl;
+				//std::cout << "shit " << huffmantable[s] << std::endl;
+				//std::cout << "this is " << huffmantable2[s][i] << std::endl;
+				//unsigned char holder = huffmantable2[s][i] - '0';
+				//std::cout << "vamos hacker " << int(holder) << std::endl;
+				//holder = holder << (7 - counter);
+				//std::cout << (int) encode_output.back() << std::endl;
+				encode_output.back() = encode_output.back() + (((unsigned char)(huffmantable2[s][i]) - '0') << (7 - counter));
+				//std::cout << int (encoded_data.back()) << std::endl;
+				if (counter == 7) {
+					encode_output.push_back(0x00);
+					counter = -1;
+					//cout << endl;
+				}
+				counter++;
+			}
+		}
+	}
+	unsigned char bits_left = 8 - counter;
+	//for (int i = 0; i < bits_left; ++i)
+	//cout << "0";
+
+
+	//4 = 00000100 > "00000100" 
+
+	encode_output.push_back(bits_left);
+	for (vector<unsigned char>::iterator it = encode_output.begin(); it != encode_output.end(); ++it) {
+		//cout << *it << endl;
+		cout << (*it) << endl;
+	}
+
+
+
+
+
+	//cout << endl;
+	//cout << int(encoded_data.front());
+	return encode_output;
+}
+
+void decode(vector<unsigned char> a, map<string, int> flipped_table) {
+	vector <int> result;
+	//	result.push_back(0);
+	int last;
+	last = a.back();
+	string ascii = "";
+	cout << "bits padded: " << last << endl;
+	a.pop_back();
+	for (vector<unsigned char>::iterator it = a.begin(); it != a.end(); ++it) {
+		for (int i = 0; i < 8; i++) {
+			if (it == --a.end())
+			{
+				if (i == (8 - last)) {
+					break;
+				}
+			}
+			int bit = (*it >> (7 - i));
+			if (i == 0)
+				cout << "BITCHHHHH " << bit << endl;
+			ascii = ascii + char((bit & 0x01) + 48);
+
+			if (flipped_table.find(ascii) != flipped_table.end()) {
+				flipped_table[ascii];
+				//cout << "!" << endl;
+				cout << ascii << endl;
+				result.push_back(flipped_table[ascii]);
+				ascii = "";
+			}
+		}
+
+	}
+	for (vector<int>::iterator it = result.begin(); it != result.end(); ++it) {
+		//cout << *it << endl;
+		cout << char(*it) << endl;
+	}
+}
+
+map<string, int> flip() {
+	map <string, int> flipped_table;
+	for (map<int, string>::iterator it = huffmantable.begin(); it != huffmantable.end(); ++it)
+		flipped_table[it->second] = it->first;
+	for (map<string, int>::iterator it = flipped_table.begin(); it != flipped_table.end(); ++it)
+		cout << it->first << "  " << it->second << '\n';
+	return flipped_table;
+
+}
+
+
+int main(int argc, char** argv)
+{
+	/*int num1;
+	int num2;
+	int size = 0;
+	vector< pair<char, int> > frequencies;
+
+	std::cout << "stddds" << std::endl;
+	while (!cin.eof()) {
+	size++;
+	cin >> num1 >> num2;
+	if (cin.eof()) break;
+	frequencies.push_back(std::make_pair((char)num1, num2));
+	cout << num1 <<"   " <<num2 << endl;
+
+	}
+
+
+	HuffmanCodes(frequencies, size);
+	for (map<int, string>::const_iterator it = huffmantable.begin(); it != huffmantable.end(); ++it)
+	{
+	cout << it->first << " " << it->second << "\n";
+	}
+	*/
+
+	//map<string, int> flipped_table;
+
+	ifstream input(argv[1]);
+	std::map<int, string> mymap;
+	string s;
+
+	while (true) {
+		input >> s;
+		if (input.eof()) break;
+
+		int key = std::stoi(s);
+
+		input >> s;
+		if (input.eof()) break;
+		mymap[key] = s;
+	}
+
+	//for (map<int, string>::iterator it = mymap.begin(); it != mymap.end(); ++it)
+	//cout << it->first << "  " << it->second << '\n';
+
+
+
+
+	/*while (!cin.eof()) {
+
+
+
+
+
+
+
+	}*/
+
+	//vector <unsigned char> encoded_data = encode();
+	encode(mymap);
+
+}
